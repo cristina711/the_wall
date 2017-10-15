@@ -1,0 +1,60 @@
+<html>
+        <head>
+          <title>Codoing dojo wall </title>
+          <style>
+              input {
+                background-color: #000000;
+                color: #FFFFFF;
+                font-weight: bold;
+                font-size: 15px;
+                width: 100px;
+                padding: 10px;
+                border-radius: 10px;
+                -moz-border-radius: 10px;
+                -webkit-border-radius: 10px;}
+          
+          </style>
+        </head>
+        <body>
+            <h1>Welcome to the coding dojo wall</h1>
+
+            <form action='/add_message' method='POST'>
+                <label for="message">Post a message: </label>
+                <div>
+                    <textarea rows="15" cols="100" name="message" id="message"></textarea>
+                </div>
+                <input type="submit" value="Submit">
+            </form>
+          
+            {% for x in all_messages: %}
+                <p> {{ x['first_name'] }} {{ x['last_name'] }}</p>
+                <p>{{ x['created_at'] }} </p>
+                <p>{{ x['message'] }} </p>
+                <form action='/add_comment' method='POST'>
+                    <input type="hidden" name="message_id" value="{{x['id']}}">
+                    <label for="comment">Post a comment: </label>
+                    <p></p>
+                    <textarea rows="10" cols="150" name="comment" id="comment"></textarea>
+                    <input type="submit" value="Submit">
+                </form>
+                {% for y in all_comments: %}
+                    {% if y['message_id'] == x['id'] %}
+                        <div style="margin-left: 20px; color:#AD3249" >
+                            <P>Comments:</P>
+                            <p>{{ y['first_name'] }} {{ y['last_name'] }}</p>
+                            <p>{{ y['created_at'] }} </p>
+                            <p>{{ y['comment'] }} </p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            {% endfor %}
+    
+
+          <!-- <form action='/process' method='POST'>
+            email:<input type="text" name="email">
+            <input type="submit" value="Submit">
+          </form> -->
+        </body>
+        </html>
+        
